@@ -1,12 +1,16 @@
-import * as React from 'react'
-import { Outlet, createRootRoute } from '@tanstack/react-router'
+import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
+import type { AuthStore } from '../features/Auth/authStore'
 
-export const Route = createRootRoute({
-  component: () => {
-    return (
-        <React.Fragment>
-            <Outlet />
-        </React.Fragment>
-    )
-  }
+export interface RouterContext {
+  auth: AuthStore
+}
+
+export const Route = createRootRouteWithContext<RouterContext>()({
+  component: () => (
+    <>
+      <Outlet />
+      {import.meta.env.DEV && <TanStackRouterDevtools position="bottom-right" />}
+    </>
+  ),
 })

@@ -9,27 +9,295 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
+import { Route as AuthenticatedClientRouteRouteImport } from './routes/_authenticated/client/route'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as AuthenticatedAdminReportsRouteImport } from './routes/_authenticated/admin/reports'
+import { Route as AuthenticatedAdminTeamRouteImport } from './routes/_authenticated/admin/team'
+import { Route as AuthenticatedClientIndexRouteImport } from './routes/_authenticated/client/index'
+import { Route as AuthenticatedClientReportsIndexRouteImport } from './routes/_authenticated/client/reports.index'
+import { Route as AuthenticatedClientReportsNewRouteImport } from './routes/_authenticated/client/reports.new'
 
-export interface FileRoutesByFullPath {}
-export interface FileRoutesByTo {}
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedClientRouteRoute =
+  AuthenticatedClientRouteRouteImport.update({
+    id: '/client',
+    path: '/client',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
+const AuthenticatedAdminReportsRoute =
+  AuthenticatedAdminReportsRouteImport.update({
+    id: '/reports',
+    path: '/reports',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminTeamRoute = AuthenticatedAdminTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
+const AuthenticatedClientIndexRoute =
+  AuthenticatedClientIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedClientRouteRoute,
+  } as any)
+const AuthenticatedClientReportsIndexRoute =
+  AuthenticatedClientReportsIndexRouteImport.update({
+    id: '/reports/',
+    path: '/reports/',
+    getParentRoute: () => AuthenticatedClientRouteRoute,
+  } as any)
+const AuthenticatedClientReportsNewRoute =
+  AuthenticatedClientReportsNewRouteImport.update({
+    id: '/reports/new',
+    path: '/reports/new',
+    getParentRoute: () => AuthenticatedClientRouteRoute,
+  } as any)
+
+export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
+  '/client': typeof AuthenticatedClientRouteRouteWithChildren
+  '/admin/reports': typeof AuthenticatedAdminReportsRoute
+  '/admin/team': typeof AuthenticatedAdminTeamRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/client/': typeof AuthenticatedClientIndexRoute
+  '/client/reports/new': typeof AuthenticatedClientReportsNewRoute
+  '/client/reports/': typeof AuthenticatedClientReportsIndexRoute
+}
+export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/admin/reports': typeof AuthenticatedAdminReportsRoute
+  '/admin/team': typeof AuthenticatedAdminTeamRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
+  '/client': typeof AuthenticatedClientIndexRoute
+  '/client/reports/new': typeof AuthenticatedClientReportsNewRoute
+  '/client/reports': typeof AuthenticatedClientReportsIndexRoute
+}
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/login': typeof LoginRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
+  '/_authenticated/client': typeof AuthenticatedClientRouteRouteWithChildren
+  '/_authenticated/admin/reports': typeof AuthenticatedAdminReportsRoute
+  '/_authenticated/admin/team': typeof AuthenticatedAdminTeamRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/client/': typeof AuthenticatedClientIndexRoute
+  '/_authenticated/client/reports/new': typeof AuthenticatedClientReportsNewRoute
+  '/_authenticated/client/reports/': typeof AuthenticatedClientReportsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: never
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/admin'
+    | '/client'
+    | '/admin/reports'
+    | '/admin/team'
+    | '/admin/'
+    | '/client/'
+    | '/client/reports/new'
+    | '/client/reports/'
   fileRoutesByTo: FileRoutesByTo
-  to: never
-  id: '__root__'
+  to:
+    | '/'
+    | '/login'
+    | '/admin/reports'
+    | '/admin/team'
+    | '/admin'
+    | '/client'
+    | '/client/reports/new'
+    | '/client/reports'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/login'
+    | '/_authenticated/admin'
+    | '/_authenticated/client'
+    | '/_authenticated/admin/reports'
+    | '/_authenticated/admin/team'
+    | '/_authenticated/admin/'
+    | '/_authenticated/client/'
+    | '/_authenticated/client/reports/new'
+    | '/_authenticated/client/reports/'
   fileRoutesById: FileRoutesById
 }
-export interface RootRouteChildren {}
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {}
+export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  LoginRoute: typeof LoginRoute
 }
 
-const rootRouteChildren: RootRouteChildren = {}
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/client': {
+      id: '/_authenticated/client'
+      path: '/client'
+      fullPath: '/client'
+      preLoaderRoute: typeof AuthenticatedClientRouteRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/reports': {
+      id: '/_authenticated/admin/reports'
+      path: '/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AuthenticatedAdminReportsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/team': {
+      id: '/_authenticated/admin/team'
+      path: '/team'
+      fullPath: '/admin/team'
+      preLoaderRoute: typeof AuthenticatedAdminTeamRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/client/': {
+      id: '/_authenticated/client/'
+      path: '/'
+      fullPath: '/client/'
+      preLoaderRoute: typeof AuthenticatedClientIndexRouteImport
+      parentRoute: typeof AuthenticatedClientRouteRoute
+    }
+    '/_authenticated/client/reports/': {
+      id: '/_authenticated/client/reports/'
+      path: '/reports'
+      fullPath: '/client/reports/'
+      preLoaderRoute: typeof AuthenticatedClientReportsIndexRouteImport
+      parentRoute: typeof AuthenticatedClientRouteRoute
+    }
+    '/_authenticated/client/reports/new': {
+      id: '/_authenticated/client/reports/new'
+      path: '/reports/new'
+      fullPath: '/client/reports/new'
+      preLoaderRoute: typeof AuthenticatedClientReportsNewRouteImport
+      parentRoute: typeof AuthenticatedClientRouteRoute
+    }
+  }
+}
+
+interface AuthenticatedAdminRouteRouteChildren {
+  AuthenticatedAdminReportsRoute: typeof AuthenticatedAdminReportsRoute
+  AuthenticatedAdminTeamRoute: typeof AuthenticatedAdminTeamRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+}
+
+const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
+  {
+    AuthenticatedAdminReportsRoute: AuthenticatedAdminReportsRoute,
+    AuthenticatedAdminTeamRoute: AuthenticatedAdminTeamRoute,
+    AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  }
+
+const AuthenticatedAdminRouteRouteWithChildren =
+  AuthenticatedAdminRouteRoute._addFileChildren(
+    AuthenticatedAdminRouteRouteChildren,
+  )
+
+interface AuthenticatedClientRouteRouteChildren {
+  AuthenticatedClientIndexRoute: typeof AuthenticatedClientIndexRoute
+  AuthenticatedClientReportsNewRoute: typeof AuthenticatedClientReportsNewRoute
+  AuthenticatedClientReportsIndexRoute: typeof AuthenticatedClientReportsIndexRoute
+}
+
+const AuthenticatedClientRouteRouteChildren: AuthenticatedClientRouteRouteChildren =
+  {
+    AuthenticatedClientIndexRoute: AuthenticatedClientIndexRoute,
+    AuthenticatedClientReportsNewRoute: AuthenticatedClientReportsNewRoute,
+    AuthenticatedClientReportsIndexRoute: AuthenticatedClientReportsIndexRoute,
+  }
+
+const AuthenticatedClientRouteRouteWithChildren =
+  AuthenticatedClientRouteRoute._addFileChildren(
+    AuthenticatedClientRouteRouteChildren,
+  )
+
+interface AuthenticatedRouteChildren {
+  AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRouteWithChildren
+  AuthenticatedClientRouteRoute: typeof AuthenticatedClientRouteRouteWithChildren
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRouteWithChildren,
+  AuthenticatedClientRouteRoute: AuthenticatedClientRouteRouteWithChildren,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  LoginRoute: LoginRoute,
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()

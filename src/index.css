@@ -1,2 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 @import "@heroui/styles";
+
+/* ------------------------------------------------------------------
+   Tema Assist — Plum #3C153B + Gold #F0C987
+------------------------------------------------------------------- */
+@theme {
+  --color-plum: #3c153b;
+  --color-plum-900: #2a0e29;
+  --color-plum-700: #55215a;
+  --color-plum-100: #efe4ee;
+  --color-gold: #f0c987;
+  --color-gold-600: #d9a94f;
+  --color-gold-100: #fbf0dc;
+  --color-cream: #fbf7f0;
+
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Override variabel HeroUI supaya semua komponen ikut tema */
+:root,
+[data-theme="light"] {
+  --background: #fbf7f0;
+  --foreground: #2a0e29;
+  --surface: #ffffff;
+  --surface-secondary: #f6efe4;
+  --surface-tertiary: #efe5d6;
+  --muted: #7c6a7b;
+
+  --accent: #3c153b;
+  --accent-foreground: #f0c987;
+
+  --field-background: #ffffff;
+  --field-foreground: #2a0e29;
+  --field-border: #e6dccd;
+
+  --border: #eadfce;
+  --separator: #efe5d6;
+  --focus: #b8862f;
+  --link: #3c153b;
+
+  --radius: 0.75rem;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-cream);
+  color: var(--color-plum-900);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+/* Tombol emas (dipakai komponen Button tone="gold") */
+.btn-gold {
+  --button-bg: var(--color-gold);
+  --button-bg-hover: var(--color-gold-600);
+  --button-bg-pressed: var(--color-gold-600);
+  --button-fg: var(--color-plum);
+}
+
+/* Pola halus untuk panel plum */
+.plum-pattern {
+  background-color: var(--color-plum);
+  background-image:
+    radial-gradient(circle at 20% 15%, rgba(240, 201, 135, 0.18), transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(240, 201, 135, 0.1), transparent 40%),
+    linear-gradient(135deg, #3c153b 0%, #2a0e29 100%);
+}

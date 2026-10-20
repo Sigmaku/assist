@@ -1,9 +1,2 @@
-import React from 'react'
-
-const DataTableView = () => {
-  return (
-    <div>DataTableView</div>
-  )
-}
-
-export default DataTableView
+export { default } from './DataTable'
+export type { DataTableColumn } from './DataTable'
